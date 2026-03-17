@@ -10,5 +10,5 @@ MaxEmptyLinesToKeep: 1
 NamespaceIndentation: All
 PointerAllignment: Left
 ReferenceAllignment: Left
-SortIncludes: CaseInsensitive
+SortIncludes: Never
 UseTab: Never

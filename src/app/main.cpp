@@ -1,15 +1,27 @@
+#include <string>
+
 #include <nlohmann/json.hpp>
 #include <spdlog/spdlog.h>
 
-#include <string>
+#include "application/create_task.h"
+#include "domain/task.h"
+#include "infra/memory_task_repository.h"
+
+using namespace TaskFlow;
 
 int main() {
-    nlohmann::json payload {
-        {"service", "TaskFlow"},
-        {"version", "0.1.0"},
-        {"status", "starting"}
-    };
+    infra::MemoryTaskRepository repository;
+    application::CreateTask create_task(repository);
 
-    spdlog::info("TaskFlow app started");
-    spdlog::info("Payload: {}", payload.dump());
+    const auto task = create_task.Execute(1, "Learn backend with C++");
+
+    // clang-format off
+    nlohmann::json payload{
+        {"id", task.ID()},
+        {"title", task.Title()},
+        {"status", domain::ToString(task.Status())}
+    };
+    // clang-format on
+
+    spdlog::info("Task created : {}", payload.dump());
 }
