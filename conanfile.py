@@ -1,12 +1,12 @@
 from conan import ConanFile
-from conan.tools.cmake import CMake, cmake_layout
+from conan.tools.cmake import CMake, CMakeToolchain, cmake_layout
 
 class TaskFlowConan(ConanFile):
     name = "TaskFlow"
     version = "0.1.0"
 
     settings = "os", "compiler", "build_type", "arch"
-    generators = "CMakeToolchain", "CMakeDeps"
+    generators = "CMakeDeps"
 
     requires = (
         "boost/1.86.0",
@@ -18,3 +18,8 @@ class TaskFlowConan(ConanFile):
 
     def layout(self):
         cmake_layout(self)
+
+    def generate(self):
+        tc = CMakeToolchain(self)
+        tc.user_presets_path = False
+        tc.generate()

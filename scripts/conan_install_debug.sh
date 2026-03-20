@@ -6,8 +6,6 @@ BUILD_DIR="${PROJECT_ROOT}/build/Debug/generators"
 
 echo "[TaskFlow] Installing Conan dependencies into ${BUILD_DIR}"
 
-mkdir -p "${BUILD_DIR}"
-
 conan install "${PROJECT_ROOT}" \
     --build=missing \
     -s build_type=Debug
