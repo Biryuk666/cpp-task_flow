@@ -9,6 +9,5 @@ echo "[TaskFlow] Installing Conan dependencies into ${BUILD_DIR}"
 mkdir -p "${BUILD_DIR}"
 
 conan install "${PROJECT_ROOT}" \
-    --output-folder="${BUILD_DIR}" \
     --build=missing \
     -s build_type=Debug

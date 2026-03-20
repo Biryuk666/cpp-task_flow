@@ -1,3 +1,7 @@
+find_package(spdlog REQUIRED)
+find_package(nlohmann_json REQUIRED)
+find_package(libpqxx REQUIRED)
+
 add_library(TaskFlow_domain
     domain/task.cpp
 )
@@ -11,6 +15,7 @@ target_compile_features(TaskFlow_domain PUBLIC cxx_std_23)
 
 add_library(TaskFlow_infra
     infra/memory_task_repository.cpp
+    infra/postgres_task_repository.cpp
 )
 
 target_include_directories(TaskFlow_infra
@@ -21,6 +26,7 @@ target_include_directories(TaskFlow_infra
 target_link_libraries(TaskFlow_infra
     PUBLIC
     TaskFlow_domain
+    libpqxx::pqxx
 )
 
 target_compile_features(TaskFlow_infra PUBLIC cxx_std_23)
