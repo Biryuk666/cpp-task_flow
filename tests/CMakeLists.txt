@@ -15,6 +15,7 @@ target_compile_features(TaskFlow_tests PRIVATE cxx_std_23)
 
 add_executable(TaskFlow_integration_tests
     integration/postgres_task_repository_test.cpp
+    integration/redis_task_cache_test.cpp
 )
 
 target_link_libraries(TaskFlow_integration_tests

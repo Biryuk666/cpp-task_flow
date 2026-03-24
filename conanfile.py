@@ -1,5 +1,5 @@
 from conan import ConanFile
-from conan.tools.cmake import CMake, CMakeToolchain, cmake_layout
+from conan.tools.cmake import CMakeToolchain, cmake_layout
 
 class TaskFlowConan(ConanFile):
     name = "TaskFlow"
@@ -14,6 +14,8 @@ class TaskFlowConan(ConanFile):
         "nlohmann_json/3.12.0",
         "gtest/1.15.0",
         "libpqxx/7.9.2",
+        "hiredis/1.2.0",
+        "redis-plus-plus/1.3.11",
     )
 
     def layout(self):
