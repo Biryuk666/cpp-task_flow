@@ -1,6 +1,7 @@
 add_executable(TaskFlow_tests
     unit/task_test.cpp
     unit/create_task_test.cpp
+    unit/get_task_by_id_test.cpp
 )
 
 target_link_libraries(TaskFlow_tests
@@ -16,6 +17,7 @@ target_compile_features(TaskFlow_tests PRIVATE cxx_std_23)
 add_executable(TaskFlow_integration_tests
     integration/postgres_task_repository_test.cpp
     integration/redis_task_cache_test.cpp
+    integration/cached_task_repository_tests.cpp
 )
 
 target_link_libraries(TaskFlow_integration_tests

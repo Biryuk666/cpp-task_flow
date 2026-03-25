@@ -18,6 +18,7 @@ add_library(TaskFlow_infra
     infra/memory_task_repository.cpp
     infra/postgres_task_repository.cpp
     infra/redis_task_cache.cpp
+    infra/cached_task_repository.cpp
 )
 
 target_include_directories(TaskFlow_infra
@@ -37,6 +38,7 @@ target_compile_features(TaskFlow_infra PUBLIC cxx_std_23)
 
 add_library(TaskFlow_application
     application/create_task.cpp
+    application/get_task_by_id.cpp
 )
 
 target_include_directories(TaskFlow_application
