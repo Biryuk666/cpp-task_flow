@@ -1,11 +1,9 @@
-#include <string>
 
-#include <nlohmann/json.hpp>
 #include <spdlog/spdlog.h>
 
+#include "api/http_server.h"
 #include "application/create_task.h"
 #include "application/get_task_by_id.h"
-#include "domain/task.h"
 #include "infra/cached_task_repository.h"
 #include "infra/postgres_settings.h"
 #include "infra/postgres_task_repository.h"
@@ -37,24 +35,10 @@ int main() {
     application::CreateTask create_task(repository);
     application::GetTaskByID get_task_by_id(repository);
 
-    const auto dumb = create_task.Execute(1, "Learn cache-aside with PostgreSQL and Redis");
-    const auto task = get_task_by_id.Execute(1);
+    api::HttpServer server{"0.0.0.0", 8080, create_task, get_task_by_id};
 
-    if (!task.has_value()) {
-        spdlog::error("Task not found");
-
-        return 1;
-    }
-
-    // clang-format off
-    nlohmann::json payload{
-        {"id", task->ID()},
-        {"title", task->Title()},
-        {"status", domain::ToString(task->Status())}
-    };
-    // clang-format on
-
-    spdlog::info("Loaded task: {}", payload.dump());
+    spdlog::info("starting TaskFlow API");
+    server.Run();
 
     return 0;
 }

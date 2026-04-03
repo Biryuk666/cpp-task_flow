@@ -2,6 +2,7 @@ find_package(spdlog REQUIRED)
 find_package(nlohmann_json REQUIRED)
 find_package(libpqxx REQUIRED)
 find_package(redis++ REQUIRED)
+find_package(Boost REQUIRED)
 
 add_library(TaskFlow_domain
     domain/task.cpp
@@ -54,6 +55,26 @@ target_link_libraries(TaskFlow_application
 
 target_compile_features(TaskFlow_application PUBLIC cxx_std_23)
 
+add_library(TaskFlow_api
+    api/http_server.cpp
+)
+
+target_include_directories(TaskFlow_api
+    PUBLIC
+    ${CMAKE_CURRENT_SOURCE_DIR}
+)
+
+target_link_libraries(TaskFlow_api
+    PUBLIC
+    TaskFlow_application
+    TaskFlow_domain
+    spdlog::spdlog
+    nlohmann_json::nlohmann_json
+    Boost::headers
+)
+
+target_compile_features(TaskFlow_api PUBLIC cxx_std_23)
+
 add_executable(TaskFlow_app app/main.cpp)
 
 target_link_libraries(TaskFlow_app
@@ -61,6 +82,7 @@ target_link_libraries(TaskFlow_app
     TaskFlow_domain
     TaskFlow_infra
     TaskFlow_application
+    TaskFlow_api
     spdlog::spdlog
     nlohmann_json::nlohmann_json
 )

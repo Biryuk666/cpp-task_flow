@@ -9,7 +9,7 @@ class TaskFlowConan(ConanFile):
     generators = "CMakeDeps"
 
     requires = (
-        "boost/1.86.0",
+        "boost/1.90.0",
         "spdlog/1.14.1",
         "nlohmann_json/3.12.0",
         "gtest/1.15.0",
