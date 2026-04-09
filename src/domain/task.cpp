@@ -3,8 +3,15 @@
 #include <stdexcept>
 
 namespace TaskFlow::domain {
-    Task::Task(std::int64_t id, const std::string& title, TaskStatus status)
-        : _id(id), _title(title), _status(status) {}
+    Task::Task(std::int64_t id, const std::string& title, TaskStatus status) : _id(id), _title(title), _status(status) {
+        if (_id <= 0) {
+            throw std::invalid_argument("Task id must be positive");
+        }
+
+        if (_title.empty()) {
+            throw std::invalid_argument("Task title must not be empty");
+        }
+    }
 
     std::int64_t Task::ID() const noexcept { return _id; }
 
@@ -30,14 +37,14 @@ namespace TaskFlow::domain {
 
     void Task::Cancel() {
         if (_status == TaskStatus::Done) {
-            throw std::logic_error("Completed task cannot be cancelled");
+            throw std::logic_error("Completed task cannot be Canceled");
         }
 
-        if (_status == TaskStatus::Cancelled) {
+        if (_status == TaskStatus::Canceled) {
             throw std::logic_error("Task is already canceled");
         }
 
-        _status = TaskStatus::Cancelled;
+        _status = TaskStatus::Canceled;
     }
 
     std::string ToString(TaskStatus status) {
@@ -48,8 +55,8 @@ namespace TaskFlow::domain {
                 return "InProgress";
             case TaskStatus::Done:
                 return "Done";
-            case TaskStatus::Cancelled:
-                return "Cancelled";
+            case TaskStatus::Canceled:
+                return "Canceled";
         }
 
         throw std::logic_error("Unknown TaskStatus");

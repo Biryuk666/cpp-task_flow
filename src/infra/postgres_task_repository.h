@@ -9,7 +9,7 @@
 #include "infra/postgres_settings.h"
 
 namespace TaskFlow::infra {
-    class PostgresTaskRepository final : ITaskRepository {
+    class PostgresTaskRepository final : public ITaskRepository {
     public:
         explicit PostgresTaskRepository(const PostgresSettings& settings);
 

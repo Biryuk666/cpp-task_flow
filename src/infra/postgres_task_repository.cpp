@@ -55,7 +55,7 @@ namespace TaskFlow::infra {
         } else if (value == "Done") {
             return domain::TaskStatus::Done;
         } else if (value == "Canceled") {
-            return domain::TaskStatus::Cancelled;
+            return domain::TaskStatus::Canceled;
         }
 
         throw std::runtime_error("Unknown task status from database: " + value);

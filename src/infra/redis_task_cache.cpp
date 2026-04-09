@@ -58,8 +58,8 @@ namespace TaskFlow::infra {
             return domain::TaskStatus::InProgress;
         } else if (value == "Done") {
             return domain::TaskStatus::Done;
-        } else if (value == "Cancelled") {
-            return domain::TaskStatus::Cancelled;
+        } else if (value == "Canceled") {
+            return domain::TaskStatus::Canceled;
         }
 
         throw std::runtime_error("Unknown task status from Redis: " + value);

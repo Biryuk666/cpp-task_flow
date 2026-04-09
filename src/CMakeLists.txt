@@ -20,6 +20,7 @@ add_library(TaskFlow_infra
     infra/postgres_task_repository.cpp
     infra/redis_task_cache.cpp
     infra/cached_task_repository.cpp
+    infra/thread_pool.cpp
 )
 
 target_include_directories(TaskFlow_infra
@@ -33,6 +34,8 @@ target_link_libraries(TaskFlow_infra
     libpqxx::pqxx
     redis++::redis++_static
     nlohmann_json::nlohmann_json
+    spdlog::spdlog
+    Boost::headers
 )
 
 target_compile_features(TaskFlow_infra PUBLIC cxx_std_23)

@@ -4,7 +4,7 @@
 #include <string>
 
 namespace TaskFlow::domain {
-    enum class TaskStatus { Created, InProgress, Done, Cancelled };
+    enum class TaskStatus { Created, InProgress, Done, Canceled };
 
     class Task {
     public:

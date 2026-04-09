@@ -1,3 +1,5 @@
+#include <algorithm>
+#include <thread>
 
 #include <spdlog/spdlog.h>
 
@@ -9,6 +11,7 @@
 #include "infra/postgres_task_repository.h"
 #include "infra/redis_settings.h"
 #include "infra/redis_task_cache.h"
+#include "infra/thread_pool.h"
 
 using namespace TaskFlow;
 
@@ -35,10 +38,16 @@ int main() {
     application::CreateTask create_task(repository);
     application::GetTaskByID get_task_by_id(repository);
 
-    api::HttpServer server{"0.0.0.0", 8080, create_task, get_task_by_id};
+    const auto hw_threads = std::max(2u, std::thread::hardware_concurrency());
+    infra::ThreadPool thread_pool{hw_threads};
 
-    spdlog::info("starting TaskFlow API");
+    api::HttpServer server{thread_pool.IOContext(), "0.0.0.0", 8080, create_task, get_task_by_id};
+
+    spdlog::info("Starting TaskFlow API with {} worker threads", hw_threads);
+
     server.Run();
+    thread_pool.Run();
+    thread_pool.IOContext().run();
 
     return 0;
 }
